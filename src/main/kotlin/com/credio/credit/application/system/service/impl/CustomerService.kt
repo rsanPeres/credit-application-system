@@ -1,6 +1,7 @@
 package com.credio.credit.application.system.service.impl
 
 import com.credio.credit.application.system.entity.Customer
+import com.credio.credit.application.system.exception.NotFoundByIdException
 import com.credio.credit.application.system.repository.CustomerRepository
 import com.credio.credit.application.system.service.ICustomerService
 import org.springframework.stereotype.Service
@@ -16,11 +17,15 @@ class CustomerService(
 
     override fun findById(id: Long): Customer =
         this.customerRepository.findById(id).orElseThrow{
-            throw RuntimeException("Id $id not found")
+            throw NotFoundByIdException("Id $id not found")
         }
 
 
-    override fun delete(id: Long) =
-        this.customerRepository.deleteById(id)
+    override fun delete(id: Long){
+        val customer = this.customerRepository.findById(id) as Customer
+
+        if (!customer.email.isNullOrEmpty()) this.customerRepository.delete(customer) else throw NotFoundByIdException("Customer not found")
+
+    }
 
 }

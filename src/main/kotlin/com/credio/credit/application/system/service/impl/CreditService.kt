@@ -1,6 +1,7 @@
 package com.credio.credit.application.system.service.impl
 
 import com.credio.credit.application.system.entity.Credit
+import com.credio.credit.application.system.exception.NotFoundByIdException
 import com.credio.credit.application.system.repository.CreditRepository
 import com.credio.credit.application.system.service.ICreditService
 import org.springframework.stereotype.Service
@@ -24,7 +25,7 @@ class CreditService(
 
     override fun findByCreditCode(customerId : Long, creditCode: UUID): Credit {
         val credit : Credit = this.creditRepository.findByCreditCode(creditCode)
-            ?: throw RuntimeException("CreditCode $creditCode not found")
+            ?: throw IllegalArgumentException("CreditCode $creditCode not found")
         return if (credit.customer?.id == customerId) credit else throw RuntimeException("Contact admin")
     }
 }
