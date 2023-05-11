@@ -10,6 +10,9 @@ spring:
     properties:
       hibernate.format_sql: true
 #      ddl-auto: create-drop
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
 #spring:
 #  datasource:
 #    url: jdbc:h2:mem:credit_application_system_db

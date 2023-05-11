@@ -23,11 +23,19 @@ dependencies {
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
+	implementation 'io.liquer.pencil:pencil-spring-boot-starter:2.0.2'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.github.tf2jaguar.micro:micro-except:1.1.3.RELEASE'
+	annotationProcessor 'io.github.tf2jaguar.micro:micro-except:1.1.3.RELEASE'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+	testImplementation 'io.mockk:mockk:1.12.0'
 }
 
-tasks.withType(KotlinCompile) {
+tasks.withType(KotlinCompile).configureEach {
 	kotlinOptions {
 		freeCompilerArgs = ['-Xjsr305=strict']
 		jvmTarget = '17'

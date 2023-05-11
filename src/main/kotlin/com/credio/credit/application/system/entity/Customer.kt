@@ -1,5 +1,6 @@
 package com.credio.credit.application.system.entity
 
+import com.credio.credit.application.system.enummeration.Role
 import jakarta.persistence.*
 import java.math.BigDecimal
 
@@ -13,6 +14,7 @@ data class Customer(
     @Column(nullable = false) var password : String = "",
     @Column(nullable = false) @Embedded var address: Address = Address(),
     @Column(nullable = false) @OneToMany(fetch = FetchType.LAZY, cascade = arrayOf(CascadeType.REMOVE), mappedBy = "customer") var credits: List<Credit> = mutableListOf(),
+    @Enumerated var role : Role = Role.USER,
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) var id : Long? = null
 )
 

@@ -7,6 +7,7 @@ CREATE TABLE customer (
    password VARCHAR(255) NOT NULL,
    zip_code VARCHAR(255) NOT NULL,
    street VARCHAR(255) NOT NULL,
+   role BIGINT NOT NULL,
    CONSTRAINT pk_customer PRIMARY KEY (id)
 );
 

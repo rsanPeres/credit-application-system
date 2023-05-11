@@ -2,6 +2,7 @@ package com.credio.credit.application.system.controller.dto
 
 import com.credio.credit.application.system.entity.Address
 import com.credio.credit.application.system.entity.Customer
+import com.credio.credit.application.system.enummeration.Role
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
@@ -17,7 +18,8 @@ data class CustomerDto(
     @field:NotEmpty(message = "email null or empty") val email: String,
     @field:NotEmpty(message = "invalid password") val password: String,
     @field:NotEmpty(message = "invalid zipCode") val zipCode: String,
-    @field:NotEmpty(message = "invalid street") val street: String
+    @field:NotEmpty(message = "invalid street") val street: String,
+    @field:NotEmpty(message = "invalid role") val role : String
 ) {
     fun toEntity(): Customer = Customer(
         firstName = this.firstName,
@@ -29,6 +31,7 @@ data class CustomerDto(
         address = Address(
             zipCode = this.zipCode,
             street = this.street
-        )
+        ),
+        role = Role.valueOf(role)
     )
 }

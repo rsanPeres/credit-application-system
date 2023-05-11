@@ -1,7 +1,6 @@
 package com.credio.credit.application.system.service.impl
 
 import com.credio.credit.application.system.entity.Credit
-import com.credio.credit.application.system.exception.NotFoundByIdException
 import com.credio.credit.application.system.repository.CreditRepository
 import com.credio.credit.application.system.service.ICreditService
 import org.springframework.stereotype.Service
@@ -21,7 +20,7 @@ class CreditService(
     }
 
     override fun findAllByCustomer(customerId: Long): List<Credit> =
-        this.creditRepository.findAllByCredits(customerId)
+        this.creditRepository.findAllByCustomerId(customerId)
 
     override fun findByCreditCode(customerId : Long, creditCode: UUID): Credit {
         val credit : Credit = this.creditRepository.findByCreditCode(creditCode)

@@ -8,5 +8,7 @@ interface ICustomerService {
     fun save(customer : Customer) : Customer
     fun findById(id: Long) : Customer
     fun delete(id : Long)
+    fun getByEmail(email : String) : Customer
+    fun existsByEmail(email : String) : Boolean
 
 }
