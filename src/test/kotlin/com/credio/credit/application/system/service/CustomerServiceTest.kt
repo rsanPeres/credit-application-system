@@ -1,13 +1,10 @@
 package com.credio.credit.application.system.service
 
 import com.credio.credit.application.system.EntityFactory
-import com.credio.credit.application.system.entity.Address
 import com.credio.credit.application.system.entity.Customer
-import com.credio.credit.application.system.enummeration.Role
 import com.credio.credit.application.system.exception.NotFoundByIdException
 import com.credio.credit.application.system.repository.CustomerRepository
 import com.credio.credit.application.system.service.impl.CustomerService
-import io.github.tf2jaguar.micro.core.error.BusinessException
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
@@ -20,17 +17,16 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.ActiveProfiles
-import java.math.BigDecimal
 import java.util.*
 
 
 @ActiveProfiles("test")
 @ExtendWith(io.mockk.junit5.MockKExtension::class)
-class CustomerServiceTest() {
+class CustomerServiceTest {
     @MockK lateinit var repository: CustomerRepository
     @InjectMockKs lateinit var service: CustomerService
     private val encoder: PasswordEncoder = BCryptPasswordEncoder()
-    private final val FAKEID : Long = Random().nextLong()
+    private val FAKEID : Long = Random().nextLong()
 
     @Test
     fun save_shouldCreateCustomer(){

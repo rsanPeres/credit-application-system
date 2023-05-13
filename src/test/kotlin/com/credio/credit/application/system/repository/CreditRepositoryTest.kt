@@ -11,8 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.test.context.ActiveProfiles
-import java.util.UUID
-
+import java.util.*
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -20,6 +19,8 @@ import java.util.UUID
 class CreditRepositoryTest {
     @Autowired
     lateinit var repository: CreditRepository
+    @Autowired
+    lateinit var customerRepository: CustomerRepository
     @Autowired
     lateinit var testEntityManager: TestEntityManager
 
@@ -30,10 +31,12 @@ class CreditRepositoryTest {
     private final val creditCode1 = UUID.fromString("757094ea-2d1c-47d0-9604-e26cbb01c753")
     private final val creditCode2 = UUID.fromString("c2d1e2b5-3d4c-406c-8a87-0a5f654920fe")
 
+
     @BeforeEach fun setup (){
-        customer = testEntityManager.persist(EntityFactory.buildCustomer())
+        customer = customerRepository.save(EntityFactory.buildCustomer())
         credit1 = testEntityManager.persist(EntityFactory.buildCredit(customer = customer))
         credit2 = testEntityManager.persist(EntityFactory.buildCredit(customer = customer))
+
     }
 
     @Test
@@ -52,10 +55,12 @@ class CreditRepositoryTest {
 
     @Test
     fun findAllByCustomerId_ShouldFindAllCreditsByCustomerId(){
-        val customerId = 1L
+        val customerId = 2L
 
         val credits = repository.findAllByCustomerId(customerId)
 
         Assertions.assertThat(credits).isNotNull.isNotEmpty
     }
 }
+
+

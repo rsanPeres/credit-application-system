@@ -28,7 +28,12 @@ class CustomerController(
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: Long) = this.customerService.delete(id)
+    fun delete(@PathVariable id: Long){
+        val customer = customerService.findById(id)
+        if(customer.email.isNotBlank()){
+            customerService.delete(id)
+        }
+    }
 
     @PatchMapping
     fun update(

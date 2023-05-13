@@ -6,8 +6,10 @@ import com.credio.credit.application.system.entity.Address
 import com.credio.credit.application.system.entity.Credit
 import com.credio.credit.application.system.entity.Customer
 import com.credio.credit.application.system.enummeration.Role
+import jakarta.persistence.EntityManager
 import jakarta.validation.constraints.NotEmpty
 import jakarta.validation.constraints.NotNull
+import org.springframework.beans.factory.annotation.Autowired
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.Month
@@ -60,7 +62,7 @@ object EntityFactory {
         password: String = "123456",
         zipCode: String = "38408222",
         street : String = "New street",
-        role : String = "USER"
+        role : String = "USER",
     ) = CustomerDto(
         firstName = firstName,
         lastName = lastName,
