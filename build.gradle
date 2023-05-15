@@ -14,17 +14,6 @@ plugins {
     id 'org.jetbrains.kotlin.plugin.spring' version '1.7.22'
     id 'org.jetbrains.kotlin.plugin.jpa' version '1.7.22'
 }
-configurations.configureEach {
-    resolutionStrategy {
-        eachDependency { DependencyResolveDetails details ->
-            if (details.requested instanceof ModuleDependency
-                    && details.requested.group == "com.gradle.enterprise"
-                    && details.requested.name == "gradle-enterprise-gradle-plugin") {
-                details.exclude(group: "group-a", module: "module-b")
-            }
-        }
-    }
-}
 
 
 group = 'com.credio'

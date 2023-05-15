@@ -4,11 +4,13 @@ import com.credio.credit.application.system.entity.Customer
 import com.credio.credit.application.system.exception.NotFoundByIdException
 import com.credio.credit.application.system.repository.CustomerRepository
 import com.credio.credit.application.system.service.ICustomerService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
 @Service
 class CustomerService(
+    @Autowired
     private val customerRepository: CustomerRepository,
     private val encoder : PasswordEncoder
 ) : ICustomerService {
@@ -31,12 +33,9 @@ class CustomerService(
 
     }
 
-    override fun getByEmail(email: String): Customer {
-        TODO("Not yet implemented")
-    }
-
-    override fun existsByEmail(email: String): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun getByEmail(email: String): Customer =
+        this.customerRepository.getByEmail(email).orElseThrow{
+            throw NotFoundByIdException("Email $email not found")
+        }
 
 }

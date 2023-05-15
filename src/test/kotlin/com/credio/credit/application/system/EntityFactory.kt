@@ -1,5 +1,6 @@
 package com.credio.credit.application.system
 
+import com.credio.credit.application.system.controller.dto.CreditDto
 import com.credio.credit.application.system.controller.dto.CustomerDto
 import com.credio.credit.application.system.controller.dto.CustomerUpdateDto
 import com.credio.credit.application.system.entity.Address
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.Month
+import java.util.Date
 
 object EntityFactory {
     fun buildCustomer(
@@ -87,5 +89,17 @@ object EntityFactory {
         income = income,
         zipCode = zipCode,
         street = street
+    )
+
+    fun buildCreditDto(
+        creditValue : BigDecimal = BigDecimal.valueOf(3000.0),
+        dayFirstInstallment : LocalDate = LocalDate.of(2023, Month.JUNE, 13),
+        numberOfInstallments : Int = 10,
+        custumerId : Long
+    ) = CreditDto(
+        creditValue = creditValue,
+        dayFirstOfInstallment = dayFirstInstallment,
+        numberOfInstallments = numberOfInstallments,
+        customerId = custumerId
     )
 }

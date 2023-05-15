@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query
 import java.util.Optional
 
 interface CustomerRepository : JpaRepository<Customer, Long> {
-    @Query("SELECT c FROM Customer c WHERE c.email = ?1", nativeQuery = true)
+    @Query("SELECT * FROM customer WHERE email = ?1", nativeQuery = true)
     fun getByEmail(email : String) : Optional<Customer>
-
-    fun existsByEmail(email : String) : Boolean
 }

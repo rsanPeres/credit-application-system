@@ -5,15 +5,15 @@ import com.credio.credit.application.system.entity.Customer
 import com.credio.credit.application.system.exception.NotFoundByIdException
 import com.credio.credit.application.system.repository.CustomerRepository
 import com.credio.credit.application.system.service.impl.CustomerService
-import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
+import io.mockk.*
 import io.mockk.impl.annotations.MockK
-import io.mockk.just
-import io.mockk.runs
-import io.mockk.verify
+import io.mockk.impl.annotations.RelaxedMockK
+import org.aspectj.lang.annotation.Before
 import org.assertj.core.api.Assertions
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.test.context.ActiveProfiles
@@ -23,10 +23,18 @@ import java.util.*
 @ActiveProfiles("test")
 @ExtendWith(io.mockk.junit5.MockKExtension::class)
 class CustomerServiceTest {
-    @MockK lateinit var repository: CustomerRepository
-    @InjectMockKs lateinit var service: CustomerService
+    @RelaxedMockK
+    lateinit var repository: CustomerRepository
     private val encoder: PasswordEncoder = BCryptPasswordEncoder()
+    @Autowired
+    lateinit var service: ICustomerService
     private val FAKEID : Long = Random().nextLong()
+
+    @BeforeEach
+    fun setUp(){
+        MockKAnnotations.init(this)
+        service = CustomerService(repository, encoder)
+    }
 
     @Test
     fun save_shouldCreateCustomer(){
@@ -56,7 +64,7 @@ class CustomerServiceTest {
     }
 
     @Test
-    fun findById_ShouldNotFindIdAndThrowsBusinessException(){
+    fun findById_ShouldNotFindIdAndThrowsNotFoudByIdException(){
         every { repository.findById(FAKEID) } returns Optional.empty()
 
         Assertions.assertThatExceptionOfType(NotFoundByIdException::class.java)

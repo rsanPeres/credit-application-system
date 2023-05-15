@@ -4,8 +4,7 @@ import com.credio.credit.application.system.EntityFactory
 import com.credio.credit.application.system.entity.Credit
 import com.credio.credit.application.system.entity.Customer
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
@@ -15,6 +14,7 @@ import java.util.*
 
 @ActiveProfiles("test")
 @DataJpaTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CreditRepositoryTest {
     @Autowired
@@ -33,13 +33,18 @@ class CreditRepositoryTest {
 
 
     @BeforeEach fun setup (){
-        customer = customerRepository.save(EntityFactory.buildCustomer())
+        customer = customerRepository.save(EntityFactory.buildCustomer().apply { id = 1 })
         credit1 = testEntityManager.persist(EntityFactory.buildCredit(customer = customer))
         credit2 = testEntityManager.persist(EntityFactory.buildCredit(customer = customer))
+    }
 
+    @AfterEach
+    fun tearDown() {
+        repository.deleteAll()
     }
 
     @Test
+    @Order(2)
     fun findByCreditCode_ShouldFindCreditByCreditCode(){
         credit1.creditCode = creditCode1
         credit2.creditCode = creditCode2
@@ -54,8 +59,9 @@ class CreditRepositoryTest {
     }
 
     @Test
+    @Order(1)
     fun findAllByCustomerId_ShouldFindAllCreditsByCustomerId(){
-        val customerId = 2L
+        val customerId = 1L
 
         val credits = repository.findAllByCustomerId(customerId)
 
