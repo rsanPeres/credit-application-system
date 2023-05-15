@@ -29,7 +29,8 @@ class CustomerService(
     override fun delete(id: Long){
         val customer = this.customerRepository.findById(id)
 
-        if (customer.get().email.isNotEmpty()) this.customerRepository.delete(customer.get()) else throw NotFoundByIdException("Customer not found")
+        if (customer.get().email.isNotEmpty()) this.customerRepository.
+        delete(customer.get()) else throw NotFoundByIdException("Customer not found")
 
     }
 

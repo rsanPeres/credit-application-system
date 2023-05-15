@@ -54,9 +54,7 @@ class CustomerController(
     fun delete(@PathVariable id: Long){
         try {
             val customer = customerService.findById(id)
-            if(customer.email.isNotBlank()){
-                customerService.delete(id)
-            }
+            customerService.delete(id)
         } catch (e : Exception){
             ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(CustomerRespose("", "", "", BigDecimal.valueOf(0),
